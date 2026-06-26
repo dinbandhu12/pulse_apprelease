@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pulse | Download</title>
+<meta name="description" content="Pulse - a live, real-time team dashboard. Download the Android app." />
+<link rel="icon" href="icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ── Edit this one line when you publish a new release ───────────────── */
+  /*  Direct-download URL for the latest GitHub release asset.             */
+  /*  Pattern: https://github.com/USER/REPO/releases/latest/download/FILE  */
+  :root { --apk-url: "https://github.com/YOUR_USERNAME/YOUR_REPO/releases/latest/download/pulse.apk"; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0A0E0D;
+    --teal: #2EE6C7;
+    --teal-bright: #34F0D0;
+    --text: #F4F7F6;
+    --muted: #9AA5A2;
+    --dim: #6B7672;
+    --glass: rgba(255,255,255,0.055);
+    --border: rgba(255,255,255,0.10);
+  }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* soft glows behind the glass */
+  .blob { position: fixed; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; }
+  .blob.teal   { width: 520px; height: 520px; background: rgba(46,230,199,0.20); top: -160px; left: -120px; }
+  .blob.violet { width: 460px; height: 460px; background: rgba(99,91,255,0.16);  top: -120px; right: -140px; }
+  .blob.deep   { width: 600px; height: 600px; background: rgba(46,230,199,0.06); bottom: -260px; left: 30%; }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    background: var(--glass);
+    backdrop-filter: blur(28px) saturate(120%);
+    -webkit-backdrop-filter: blur(28px) saturate(120%);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 40px 32px 32px;
+    text-align: center;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8);
+    animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .card::before { /* lit top edge */
+    content: ''; position: absolute; inset: 0; border-radius: 28px; pointer-events: none;
+    background: linear-gradient(160deg, rgba(255,255,255,0.14), transparent 32%);
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  .icon {
+    width: 92px; height: 92px; border-radius: 24px; margin: 0 auto 22px;
+    display: block; border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 14px 40px -10px rgba(46,230,199,0.5);
+  }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -1px; }
+  .tag { color: var(--muted); font-size: 15px; font-weight: 500; margin-top: 8px; line-height: 1.5; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 22px 0 28px; }
+  .chip {
+    font-size: 12px; font-weight: 500; color: var(--muted);
+    padding: 6px 12px; border-radius: 999px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  }
+
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 11px;
+    width: 100%; padding: 16px; border-radius: 18px;
+    font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;
+    text-decoration: none; border: 1px solid transparent;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn svg { width: 22px; height: 22px; }
+
+  .btn-android {
+    background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+    color: #04221C;
+    box-shadow: 0 12px 34px -8px rgba(46,230,199,0.55);
+  }
+  .btn-android:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -8px rgba(46,230,199,0.7); }
+  .btn-android .sub { font-weight: 500; opacity: 0.75; font-size: 13px; }
+
+  .btn-pc {
+    margin-top: 12px;
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border);
+    color: var(--dim);
+    cursor: not-allowed;
+  }
+  .badge {
+    margin-left: 4px; font-size: 11px; font-weight: 600; color: var(--teal);
+    background: rgba(46,230,199,0.12); border: 1px solid rgba(46,230,199,0.3);
+    padding: 3px 8px; border-radius: 999px;
+  }
+
+  .foot { margin-top: 24px; color: var(--dim); font-size: 12.5px; line-height: 1.6; }
+  .foot b { color: var(--muted); font-weight: 600; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 10px var(--teal); }
+</style>
+</head>
+<body>
+  <div class="blob teal"></div>
+  <div class="blob violet"></div>
+  <div class="blob deep"></div>
+
+  <main class="card">
+    <img class="icon" src="icon.png" alt="Pulse" />
+    <h1>Pulse</h1>
+    <p class="tag">A live, real-time team dashboard.<br/>Tasks, KPIs, goals, meetings &amp; chat.</p>
+
+    <div class="chips">
+      <span class="chip">Live sync</span>
+      <span class="chip">Task board</span>
+      <span class="chip">Goals</span>
+      <span class="chip">KPIs</span>
+      <span class="chip">Chat</span>
+    </div>
+
+    <a class="btn btn-android" id="androidBtn" download="pulse.apk">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18a.4.4 0 00-.7-.4l-1.86 3.22a11.5 11.5 0 00-9.76 0L5.26 5.9a.4.4 0 10-.7.4L6.4 9.48A10.8 10.8 0 001 18.5h22a10.8 10.8 0 00-5.4-9.02zM7 15.25a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2z"/></svg>
+      <span>Download for Android <span class="sub">· .apk</span></span>
+    </a>
+
+    <button class="btn btn-pc" disabled>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 011 1v10a1 1 0 01-1 1h-7v2h3v2H7v-2h3v-2H3a1 1 0 01-1-1V6a1 1 0 011-1zm1 2v8h16V7H4z"/></svg>
+      Windows <span class="badge">Coming soon</span>
+    </button>
+
+    <p class="foot"><span class="dot"></span><b>v1.0.0</b> · Android 7.0+ · ~80 MB<br/>Internal build - for the DBS team only.</p>
+  </main>
+
+  <script>
+    // Wire the Android button to the release URL defined in :root --apk-url.
+    var url = getComputedStyle(document.documentElement).getPropertyValue('--apk-url').trim().replace(/^"|"$/g, '');
+    document.getElementById('androidBtn').setAttribute('href', url);
+  </script>
+</body>
+</html>
